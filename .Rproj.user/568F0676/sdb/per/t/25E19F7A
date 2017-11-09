@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Description:\n# Author: Alice Ziegler\n# Date: 2017-10-12 11:55:18\n\n########################################################################################\n###Documentation\n########################################################################################\n\n#var_merge <- function(dat_path, lst_vars_path){\n  for (i in 1:length(lst_vars_path)){\n   tmp <- get (load (paste0(dat_path,lst_vars_path[i],\".RData\")))\n    if(i==1){\n    result <- tmp\n    }else{\n      result <- merge(result,tmp,by.x=\"plotID\",by.y=\"plotID\")\n    }\n  }\n\n",
+    "created" : 1509011926728.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2125382265",
+    "id" : "25E19F7A",
+    "lastKnownWriteTime" : 1509013467,
+    "last_content_update" : 1509013467213,
+    "path" : "E:/packages_general/WoLi_funs/var_merge.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

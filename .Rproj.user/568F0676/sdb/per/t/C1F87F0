@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Description: \n# Author: Alice Ziegler\n# Date: 2017-10-16 16:13:38\n\n\n########################################################################################\n###Documentation\n########################################################################################\n#package would nee following libraries: \n# library(rPointDB)\n# library(dplyr)\n# library(pls)\n########################################################################################\n########################################################################################\n\nrm(list=ls())\n\n########################################################################################\n###Settings\n########################################################################################\ndat_path <- \"E:/Projekte/Kili/data/\"\nr_pnts <- 10\nd_rst <- 50\ndb_layers <- c(\"kili\", \"kili2\")\ndb <- \"http://192.168.191.183:8081\"\ndb_login <- \"user:password\"\ntec_crdnt <- read.csv(paste0(dat_path,\"tec_crdnt.csv\"), header=T, sep=\",\")\nlocation <- unique(tec_crdnt[, c(\"plotID\", \"x_pnt\", \"y_pnt\")])\nrst_type <- c(\"chm\")\ngroup_name <- \"kili\"\ngap_hght <- 10\ngap_sze <- 9\n\n########\npnts_path <- paste0(\"points_\", r_pnts, \"m.RData\")\nchm_path <- paste0(dat_path, \"raster_db_\", d_rst, \"m/\", rst_type[1], \"/\")\n\nldr_str_pnts_path <- \"ldr_str_pnts\"\nldr_str_chm_path <- \"ldr_str_chm\"\ndat_SR_path <- \"dat_SR\"\nlst_vars_path <- c(ldr_str_pnts_path, ldr_str_chm_path, dat_SR_path)\n########################################################################################\n###Do it (Don't change anything past this point except you know what you are doing!)\n########################################################################################\nsource(\"E:/packages_general/WoLi/points_query.R\")\npoints_query(dat_path = dat_path, location = location)\nsource(\"E:/packages_general/WoLi/point_structure.R\")\n#usecase get points\npoint_structure(dat_path = dat_path, pnts_path = pnts_path)\n\npoint_structure(dat_path = dat_path, r_pnts = r_pnts, db_layers = db_layers, db = db, db_login = db_login, \n                location = location)\nrm(db)\nsource(\"E:/packages_general/WoLi/raster_query.R\")\nraster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db, \ndb_login = db_login, location = location, rst_type = rst_type)\n\nsource(\"E:/packages_general/WoLi/gap_structure.R\")\ngap_structure(dat_path = dat_path, chm_path = chm_path, d_rst = d_rst, gap_hght = 10, gap_sze = 9)\n###\n#merging\n###\nsource(\"E:/packages_general/WoLi/var_merge.R\")\nvar_merge(dat_path = dat_path, lst_vars_path = lst_vars_path)\nload(paste0(dat_path, \"SR_ldr_vars.RData\"))\n",
+    "created" : 1509012048504.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3473602058",
+    "id" : "C1F87F0",
+    "lastKnownWriteTime" : 1508838031,
+    "last_content_update" : 1508838031,
+    "path" : "E:/packages_general/WoLi_funs/WoLi_wrap.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

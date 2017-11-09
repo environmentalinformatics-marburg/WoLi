@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Description:\n# Author: Alice Ziegler\n# Date: 2017-10-17 09:01:15\n\n########################################################################################\n###Documentation\n########################################################################################\n\n########################################################################################\n########################################################################################\n\n#'\npoints_query <- function( dat_path, r_pnts = 10, db_layers = c(\"kili\", \"kili2\"), db = \"http://192.168.191.183:8081\",\n                    db_login = \"user:password\", location){\n  library(rPointDB)\n  library(dplyr)\n  remotesensing <- RemoteSensing$new(db, db_login)\n  points_all_lay <- lapply(db_layers, function(i){\n    pointdb <- remotesensing$lidar(i)\n    points_lay <- lapply(location$plotID, function(j){\n      extent <- extent_radius(x = location$x_pnt[j], y = location$y_pnt[j], r = r_pnts)\n      points <- pointdb$query(ext = extent)\n      if (nrow(points)!= 0){\n        points$plotID <- location$plotID[j]\n        points$layer <- i\n      }\n      return(points)\n    })\n    points_lay_bnd <- do.call(rbind, points_lay)\n  })\n  points_all <- do.call(rbind, points_all_lay)\n  rm(points_all_lay)\n\n  plt_min <- setNames(aggregate(z ~ plotID, points_all, min), c(\"plotID\", \"h_min\"))\n  pnts <- left_join(points_all, plt_min, by = \"plotID\")\n  rm(points_all)\n  pnts$h_rel <- pnts$z-pnts$h_min\n  pnts$landuse <- substr(pnts$plotID, 1, 3)\n  pnts <- pnts[,c(which(colnames(pnts) == \"plotID\"), which(colnames(pnts) == \"landuse\"),\n                  which(colnames(pnts) == \"x\") : which(colnames(pnts) == \"classificationFlags\"),\n                  which(colnames(pnts) == \"layer\") : which(colnames(pnts) == \"h_rel\"))]\n\n  save(pnts, file = paste0(dat_path, \"points_\", r_pnts, \"m.RData\"))\n  #write(paste0(\"r_pnts = \", r_pnts), file = paste0(dat_path, \"points_\", r_pnts, \"m.txt\"))\n\n\n}\n",
+    "created" : 1509011541318.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2683572374",
+    "id" : "AB947363",
+    "lastKnownWriteTime" : 1509013852,
+    "last_content_update" : 1509013857915,
+    "path" : "E:/packages_general/WoLi/R/points_query.R",
+    "project_path" : "R/points_query.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

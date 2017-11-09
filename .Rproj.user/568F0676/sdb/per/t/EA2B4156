@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "lst <- c(\"a\", \"b\", \"c\", \"d\")\npst <- lapply(lst, function(i){\n  x <- paste0(i, \"happy\")\n  return(x)\n})\npst_unbind <- unlist(pst, recursive = F)\n\n\ntestlist <- list(list(\"a\",\"b\"),list(\"c\",\"d\"))\nlapply(testlist,unlist)\nunlist(testlist, recursive = F)\nunlist(testlist, recursive = T)\n",
+    "created" : 1509013010933.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1519346189",
+    "id" : "EA2B4156",
+    "lastKnownWriteTime" : 1509024110,
+    "last_content_update" : 1509024110702,
+    "path" : "E:/Projekte/Kili/src/doodle.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
